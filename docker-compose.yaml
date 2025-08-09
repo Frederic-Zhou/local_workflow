@@ -43,8 +43,6 @@ services:
     networks:
       - automation
 
-
-
 networks:
   automation:
     driver: bridge
