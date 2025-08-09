@@ -1,0 +1,13 @@
+[common]
+serverAddr = "FRPS_ADDRESS_PLACEHOLDER"
+serverPort = 7000
+# 如果 frps 配了鉴权可启用：
+# auth.method = "token"
+# auth.token  = "your-token"
+
+[[proxies]]
+name = "n8n"
+type = "tcp"
+localIP = "n8n"
+localPort = 5678
+remotePort = 5678
