@@ -24,7 +24,7 @@ services:
     ports:
       - "4723:4723"
     environment:
-      APPIUM_ALLOW_INSECURE: "relaxed_security"
+      APPIUM_ADDITIONAL_PARAMS: "--relaxed-security"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: always
