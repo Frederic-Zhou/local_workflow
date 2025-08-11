@@ -48,6 +48,7 @@ services:
     
 
   db:
+    container_name: db
     deploy:
       # To use an external database, set replicas to 0 and set DATABASE_URL to the external database url in the .env file
       replicas: 1
@@ -72,6 +73,7 @@ services:
     
 
   windmill_server:
+    container_name: windmill_server
     image: ${WM_IMAGE}
     pull_policy: always
     deploy:
@@ -93,6 +95,7 @@ services:
     restart: always
 
   windmill_worker:
+    container_name: windmill_worker
     image: ${WM_IMAGE}
     pull_policy: always
     deploy:
@@ -122,6 +125,7 @@ services:
 
   ## This worker is specialized for "native" jobs. Native jobs run in-process and thus are much more lightweight than other jobs
   windmill_worker_native:
+    container_name: windmill_worker_native
     # Use ghcr.io/windmill-labs/windmill-ee:main for the ee
     image: ${WM_IMAGE}
     pull_policy: always
@@ -149,6 +153,7 @@ services:
     restart: always
 
   windmill_indexer:
+    container_name: windmill_indexer
     image: ${WM_IMAGE}
     pull_policy: always
     deploy:
@@ -171,6 +176,7 @@ services:
     restart: always
 
   lsp:
+    container_name: lsp
     image: ghcr.io/windmill-labs/windmill-lsp:latest
     pull_policy: always
     expose:
@@ -192,6 +198,7 @@ services:
     restart: always
 
   caddy:
+    container_name: caddy
     image: ghcr.io/windmill-labs/caddy-l4:latest
     # Configure the mounted Caddyfile and the exposed ports or use another reverse proxy if needed
     volumes:
