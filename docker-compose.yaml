@@ -50,7 +50,6 @@ services:
     
 
   db:
-    container_name: db
     deploy:
       # To use an external database, set replicas to 0 and set DATABASE_URL to the external database url in the .env file
       replicas: 1
@@ -75,7 +74,6 @@ services:
     
 
   windmill_server:
-    container_name: windmill_server
     image: ${WM_IMAGE}
     pull_policy: always
     deploy:
@@ -97,7 +95,6 @@ services:
     restart: always
 
   windmill_worker:
-    container_name: windmill_worker
     image: ${WM_IMAGE}
     pull_policy: always
     deploy:
@@ -127,7 +124,6 @@ services:
 
   ## This worker is specialized for "native" jobs. Native jobs run in-process and thus are much more lightweight than other jobs
   windmill_worker_native:
-    container_name: windmill_worker_native
     # Use ghcr.io/windmill-labs/windmill-ee:main for the ee
     image: ${WM_IMAGE}
     pull_policy: always
@@ -148,29 +144,6 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - worker_logs:/tmp/windmill/logs
-    logging: *default-logging
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    restart: always
-
-  windmill_indexer:
-    container_name: windmill_indexer
-    image: ${WM_IMAGE}
-    pull_policy: always
-    deploy:
-      replicas: 0 # set to 1 to enable full-text job and log search
-    expose:
-      - 8002
-    environment:
-      - PORT=8002
-      - DATABASE_URL=${DATABASE_URL}
-      - MODE=indexer
-    depends_on:
-      db:
-        condition: service_healthy
-    volumes:
-      - windmill_index:/tmp/windmill/search
       - worker_logs:/tmp/windmill/logs
     logging: *default-logging
     extra_hosts:
