@@ -36,15 +36,17 @@ services:
     restart: always
     
 
-  # frpc:
-  #   image: fatedier/frpc:v0.64.0
-  #   container_name: frpc
-  #   volumes:
-  #     - ./frpc.toml:/etc/frp/frpc.toml:ro
-  #   command: ["-c", "/etc/frp/frpc.toml"]
-  #   extra_hosts:
-  #     - "host.docker.internal:host-gateway"
-  #   restart: always
+  frpc:
+    image: fatedier/frpc:v0.64.0
+    container_name: frpc
+    volumes:
+      - ./frpc.toml:/etc/frp/frpc.toml:ro
+    command: ["-c", "/etc/frp/frpc.toml"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    deploy:
+      replicas: 0
+    restart: always
     
 
   db:
@@ -184,17 +186,6 @@ services:
     volumes:
       - lsp_cache:/pyls/.cache
     logging: *default-logging
-    restart: always
-
-  multiplayer:
-    image: ghcr.io/windmill-labs/windmill-multiplayer:latest
-    deploy:
-      replicas: 0 # Set to 1 to enable multiplayer, only available on Enterprise Edition
-    expose:
-      - 3002
-    logging: *default-logging
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     restart: always
 
   caddy:
